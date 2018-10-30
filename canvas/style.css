@@ -1,0 +1,11 @@
+#suwaki{
+    float: left;
+    clear: both;
+    margin: 20px;
+}
+canvas{
+    float: left;
+}
+#buttons{
+    margin: 20px;
+}

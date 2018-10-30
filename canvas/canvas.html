@@ -5,17 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Canvas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
       
 </head>
 <body>
-    <input type="file" id="grafika">
-    <button id="run">Pobierz piksele</button>
+    <span id="buttons">
+        <input type="file" id="grafika">
+        <button id="run">Pobierz piksele</button>
+    </span>
+    <br>
     <canvas width="600" height="400" id="plotno" style="border: 1px solid black"></canvas>
 
-    <input type="range" id="kontrast">
-    <input type="range" id="jasnosc">
-    <input type="range" id="nasycenie">
+    <span id="suwaki">
+        <label>Kontrast</label><input type="range" value="0" min="-100" max="100" step="1" name="kontrast" id="kontrast">
+        <label>Jasnosc</label><input type="range" value="0" min="-100" max="100" step="1" name="jasnosc" id="jasnosc">
+        <label>Nasycenie</label><input type="range" value="0" min="-100" max="100" step="1" name="nasycenie" id="nasycenie">
+    </span>
+
 
     <script src="canvas.js"></script>
 </body>

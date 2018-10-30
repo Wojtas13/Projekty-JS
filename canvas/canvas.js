@@ -1,9 +1,11 @@
 let plik = document.querySelector('#grafika');
 let plotno = document.querySelector('#plotno');
 let btnRun = document.querySelector('#run');
+
 let kontrast = document.querySelector('#kontrast');
 let jasnosc = document.querySelector('#jasnosc');
 let nasycenie = document.querySelector('#nasycenie');
+
 
 /*
 plik.addEventListener('change', (e) => {
@@ -32,8 +34,45 @@ btnRun.addEventListener('click', (e) => {
     ctx.putImageData(imageData, 0, 0); // wrzucanie do canvasa 
 });
 
-kontrast.addEventListener('click', (e) => {
-    
+kontrast.addEventListener('change', (e) => {
+    imageData = ctx.getImageData(0, 0, plotno.width, plotno.height);
+    let value = kontrast.value;                          // pobieranie wartosci z suwaka
+    console.log(value);
+})
+jasnosc.addEventListener('change', (e) => {
+    imageData = ctx.getImageData(0, 0, plotno.width, plotno.height);
+    value = jasnosc.value;                                  // pobieranie wartosci z suwaka
+
+    if(value <= -100 || value < 0){
+        for(let i = 0; i < imageData.data.length; i += 4){
+            imageData.data[i] = Math.min(255, imageData.data[i] + value);
+            imageData.data[i + 1] = Math.min(255, imageData.data[i + 1] + value);
+            imageData.data[i + 2] = Math.min(255, imageData.data[i + 2] + value);
+        }
+        ctx.putImageData(imageData, 0, 0);
+    }
+    else if(value >= 100 || value > 0){
+        for(let i = 0; i < imageData.data.length; i += 4){
+            imageData.data[i] = Math.min(255, imageData.data[i] - value);
+            imageData.data[i + 1] = Math.min(255, imageData.data[i + 1] - value);
+            imageData.data[i + 2] = Math.min(255, imageData.data[i + 2] - value);
+        }
+        ctx.putImageData(imageData, 0, 0);
+    }
+    else{
+        for(let i = 0; i < imageData.data.length; i += 4){
+            imageData.data[i] = Math.min(255, imageData.data[i]);
+            imageData.data[i + 1] = Math.min(255, imageData.data[i + 1]);
+            imageData.data[i + 2] = Math.min(255, imageData.data[i + 2]);
+        }
+        ctx.putImageData(imageData, 0, 0);
+    }
+    console.log(value);
+})
+nasycenie.addEventListener('change', (e) => {
+    imageData = ctx.getImageData(0, 0, plotno.width, plotno.height);
+    value = nasycenie.value;                                // pobieranie wartosci z suwaka
+    console.log(value);
 })
 
 //zmiana kontrastu jasnosci nasycenia
