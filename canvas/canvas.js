@@ -1,6 +1,6 @@
 let plik = document.querySelector('#grafika');
 let plotno = document.querySelector('#plotno');
-let btnRun = document.querySelector('#run');
+let btnRun = document.querySelector('#run2');
 
 let kontrast = document.querySelector('#kontrast');
 let jasnosc = document.querySelector('#jasnosc');

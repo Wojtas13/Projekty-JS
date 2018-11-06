@@ -9,20 +9,24 @@
       
 </head>
 <body>
-    <span id="buttons">
-        <input type="file" id="grafika">
-        <button id="run">Pobierz piksele</button>
-    </span>
-    <br>
-    <canvas width="600" height="400" id="plotno" style="border: 1px solid black"></canvas>
+    <div id="container">
+        <span id="button">
+            <button class="btn" id="run">Wybierz plik</button>
+            <input type="file" id="grafika">  
+        </span>
+        <span id="button">
+          <button class="btn" id="run2">Pobierz piksele</button>
+        </span>
+        <br>
+        <canvas width="600" height="400" id="plotno" style="border: 1px solid black"></canvas>
 
-    <span id="suwaki">
-        <label>Kontrast</label><input type="range" value="0" min="-100" max="100" name="kontrast" id="kontrast">
-        <label>Jasnosc</label><input type="range" value="0" min="-100" max="100" name="jasnosc" id="jasnosc">
-        <label>Nasycenie</label><input type="range" value="1" min="0" max="2" step="0.1" name="nasycenie" id="nasycenie">
-    </span>
-
-
+        <span id="suwaki">
+            <label>Kontrast</label><input type="range" class="slider" value="0" min="-100" max="100" name="kontrast" id="kontrast">
+            <label>Jasnosc</label><input type="range" class="slider" value="0" min="-100" max="100" name="jasnosc" id="jasnosc">
+            <label>Nasycenie</label><input type="range" class="slider" value="1" min="0" max="2" step="0.1" name="nasycenie" id="nasycenie">
+        </span>
+    </div>
+    <!--JAVASCRIPT-->
     <script src="canvas.js"></script>
 </body>
 </html>
