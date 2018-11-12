@@ -6,9 +6,8 @@
 // odbieranie wiadomosci: zdarzenie message obiektu websocket
 // inne zdarzenia: error, open, close
 
-let server = 'ws://wsei.edu.pl:8010';
+let server = 'ws://localhost:8080';
 let ws = new WebSocket(server);
-let licznik = 1
 document.addEventListener("DOMContentLoaded", appStart);
 
 function appStart(){
@@ -17,13 +16,9 @@ function appStart(){
     ws.addEventListener('message', wsMessage);
     ws.addEventListener('error', wsError);
     
-   /* function sa(){
-        let title = document.querySelector('title').value;
-        let body = document.querySelector('msg').value;
-    }*/
-    
     let btn = document.querySelector('#send');
     btn.addEventListener('mousedown', wsMessage);
+    
 }
 
 function wsOpen(){
@@ -34,12 +29,13 @@ function wsClose(){
     console.log("ws close");
 }
 function wsMessage(){
+    
     let message = {
         body: document.querySelector('#msg').value,
-        title: document.querySelector('#title').value
+        nick: document.querySelector('#nick').value
     }
     ws.send(JSON.stringify(message));
-    console.log(licznik++)
+    console.log(message)
 }
 
 function wsError(){

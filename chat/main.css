@@ -1,0 +1,52 @@
+body{
+    background-color: #252525;
+    color: #63d100;
+    margin: 20px;
+    padding: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+h1{
+    text-align: center;
+    font-size: 3em;
+}
+.forward{
+    max-width: 500px;
+    margin: 10px 10px;
+    padding: 10px 0;
+    border-radius: 5%;
+}
+label{
+    display: block;
+}
+input{
+    max-width: 250px;
+    display: block;
+    padding: 10px;
+    margin: 10px 0;
+    width: 50%;
+}
+#send{
+    background-color: #63d100;
+    border: 0;
+    color: #252525;
+    cursor: pointer;
+    width: auto;
+    margin: 10px 0;
+    padding: 10px;
+    text-transform: uppercase;
+}
+#send:hover{
+    color: #fff;
+}
+#msg{
+    height: 50px;
+    text-align: left;
+}
+.back{
+    background-color: #63d100;
+    width: 100%;
+    height: 100px;
+    color: #252525;
+    margin: 30px 10px;
+    padding: 20px;
+}
