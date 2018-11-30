@@ -5,12 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Kuleczka</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="script.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+    
 </head>
 <body>
-    <svg height="100" width="100">
-        <circle cx="50" cy="50" r="20" stroke="green" stroke-width="3" id="ball" />
-      </svg>
+    <div id="canvases">
+        <canvas id="canvas" width="480" height="480"></canvas>
+        <canvas id="ball" width="48" height="48"></canvas>
+    </div>
+    <p><h2>Ustaw telefon w pozycji pionowej</h2></p>
+    <div id="menu">
+        <button id="start">Nowa gra</button>
+        <label for="czas">Czas:</label>
+    </div>
+
+<!--JAVASCRIPT-->
+<script src="script.js"></script>
+
 </body>
 </html>
