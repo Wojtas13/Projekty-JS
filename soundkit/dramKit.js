@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", appStart);
-
+//dzwieki perkusji
 const sounds = {
     97: 'boom',
     115: "clap",
@@ -12,34 +12,71 @@ const sounds = {
     108:"tom"
 }
 
-//kanaly do odtwarzania
+//kanaly
 let channel1 =[];
 let channel2 =[];
 let channel3 =[];
 let channel4 =[];
 
+//czy wcisniety
 let isRecording = false;
+let isChannel1 = false;
+let isChannel2 = false;
+let isChannel3 = false;
+let isChannel4 = false;
+
 let recStart = null;
 
 function appStart() {
     window.addEventListener('keypress', playSound);
+    //nagrywanie
     document.querySelector('#rec').addEventListener('click', (e)=>{
         isRecording = !isRecording;
+        //zapisuje czas
         recStart = Date.now();
         e.target.innerHTML = isRecording ? 'Zatrzymaj' : 'Nagrywaj';
     });
+    //podpiecie kanalow
+    document.querySelector('#channel1').addEventListener('click', (e)=>{
+        isChannel1 = !isChannel1;
+        e.target.innerHTML = isChannel1 ? "Kanał 1" : "Kanał 1";
+    });
+    document.querySelector('#channel2').addEventListener('click', (e)=>{
+        isChannel2 = !isChannel2;
+        e.target.innerHTML = isChannel2 ? "Kanał 2" : "Kanał 2";
+    });
+    document.querySelector('#channel3').addEventListener('click', (e)=>{
+        isChannel3 = !isChannel3;
+        e.target.innerHTML = isChannel3 ? "Kanał 3" : "Kanał 3";
+    });
+    document.querySelector('#channel4').addEventListener('click', (e)=>{
+        isChannel4 = !isChannel4;
+        e.target.innerHTML = isChannel4 ? "Kanał 4" : "Kanał 4";
+    });
+    //przyciski odtwarzaj i wyczysc
     document.querySelector('#play').addEventListener('click', playMusic);
+    document.querySelector('#clear').addEventListener('click', clearMusic);
 }
-
+//czyszczenie tablic
+function clearMusic(){
+        channel1.splice(0,channel1.length);
+        channel2.splice(0,channel2.length);
+        channel3.splice(0,channel3.length);
+        channel4.splice(0,channel4.length);
+}
+//odtworzenie dzwiekow z tablicy
 function playMusic() {
     channel1.forEach(sound =>{
         setTimeout(
             () => {
+                //pobranie nazw dzwiekow
                 audioDOM = document.querySelector(`#${sound.sound}`);
+                //zerowanie czasu
                 audioDOM.currentTime = 0;
+                //odtwarzanie
                 audioDOM.play();
                 }
-            ,sound.time
+            ,sound.time //odczytanie czasu z tablicy
         )},
     )
     channel2.forEach(sound =>{
@@ -81,15 +118,41 @@ function playSound(e) {
     //otworz dzwiek
     audioDOM.currentTime = 0;
     audioDOM.play();
+    //wybierz kanal
     //zapisz dzwiek w tablicy
-    if(isRecording){
-        channel1.push({
-            sound: soundName,
-            time: Date.now() - recStart
-        });
+    if(isChannel1){
+        if(isRecording){
+            channel1.push({
+                sound: soundName,
+                time: Date.now() - recStart
+            });
+        }
+    }
+    if(isChannel2){
+        if(isRecording){
+            channel2.push({
+                sound: soundName,
+                time: Date.now() - recStart
+            });
+        }
+    }
+    if(isChannel3){
+        if(isRecording){
+            channel3.push({
+                sound: soundName,
+                time: Date.now() - recStart
+            });
+        }
+    }
+    if(isChannel4){
+        if(isRecording){
+            channel4.push({
+                sound: soundName,
+                time: Date.now() - recStart
+            });
+        }
     }
 }
-
 //mapa przypisuje wartosci do klucza
 /*
 const s = Map()
