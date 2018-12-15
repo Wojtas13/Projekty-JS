@@ -1,7 +1,7 @@
-let plik = document.querySelector('#grafika');
+//do pliku
 let plotno = document.querySelector('#plotno');
-let btnRun = document.querySelector('#run2');
-
+let plik = document.querySelector('input[type=file]');
+//do suwakow
 let kontrast = document.querySelector('#kontrast');
 let jasnosc = document.querySelector('#jasnosc');
 let nasycenie = document.querySelector('#nasycenie');
@@ -9,34 +9,21 @@ let nasycenie = document.querySelector('#nasycenie');
 //////////////////////////////////
 
 let value = undefined;  // wartosc suwaka
-let zdjecie = "./city.jpg";
-let ctx = plotno.getContext('2d'); // kontekst
-let img = new Image(); // pobieranie zdjecia
-img.src = zdjecie;
+let ctx = plotno.getContext('2d'); // kontekst pola canvas
 
-// po zaladowaniu strony
-
-img.addEventListener('load', (e) => {
-    ctx.drawImage(img, 0, 0, plotno.clientWidth, plotno.height); // rysowanie zdjecia
-    let imageData = ctx.getImageData(0, 0, plotno.width, plotno.height); // wspolrzedne
-});
-
-// pobierz piksele
-
-btnRun.addEventListener('click', (e) => {
-    imageData = ctx.getImageData(0, 0, plotno.width, plotno.height); // pobieranie pikseli
-    console.log(imageData);
-/*
-    for(let i = 0; i < imageData.data.length; i += 4){ //petla pobiera caly piksel 
-        imageData.data[i] = Math.min(255, imageData.data[i] + 30);
-        imageData.data[i + 1] = Math.min(255, imageData.data[i + 1] + 30);
-        imageData.data[i + 2] = Math.min(255, imageData.data[i + 2] + 30); // dodawanie wartosci do kazdej skladowej piksela
+//pobierz zdjecie
+plik.addEventListener('change', ()=>{
+    let reader = new FileReader(); //objekt do czytania zawartosci plikow
+    reader.onload = function(){ //zaladowanie odczytu pliku
+        let img = new Image(); 
+        img.onload = function(){ //zaladowanie zdjecia
+            ctx.drawImage(img, 0, 0, plotno.clientWidth, plotno.height); //rysowanie zdjecia
+        }
+        img.src = reader.result; //przypisanie sciezki
     }
-    ctx.putImageData(imageData, 0, 0); // wrzucanie do canvasa */
+    reader.readAsDataURL(plik.files[0]); //pobranie sciezki
 });
-
 // suwak kontrastu
-
 kontrast.addEventListener('change', (e) => {
     value = kontrast.value;
     value = parseInt(value, 10);
@@ -52,7 +39,6 @@ kontrast.addEventListener('change', (e) => {
 });
 
 // suwak jasnosci
-
 jasnosc.addEventListener('change', (e) => { 
     value = jasnosc.value;
     value = parseInt(value, 10);
@@ -66,7 +52,6 @@ jasnosc.addEventListener('change', (e) => {
 });
 
 // suwak nasycenia
-
 nasycenie.addEventListener('change', (e) => {
     value = nasycenie.value;
     value = parseFloat(value);
@@ -103,3 +88,26 @@ nasycenie.addEventListener('change', (e) => {
 //-------------------------
 //zmiana kontrastu jasnosci nasycenia
 // rysowanie po zdjeciu mouse events canvas
+/*
+    PRZYKLAD
+    for(let i = 0; i < imageData.data.length; i += 4){ //petla pobiera caly piksel 
+        imageData.data[i] = Math.min(255, imageData.data[i] + 30);
+        imageData.data[i + 1] = Math.min(255, imageData.data[i + 1] + 30);
+        imageData.data[i + 2] = Math.min(255, imageData.data[i + 2] + 30); // dodawanie wartosci do kazdej skladowej piksela
+    }
+    ctx.putImageData(imageData, 0, 0); // wrzucanie do canvasa 
+*/
+
+/*
+// po zaladowaniu strony
+img.addEventListener('load', (e) => {
+    ctx.drawImage(img, 0, 0, plotno.clientWidth, plotno.height); // rysowanie zdjecia
+    let imageData = ctx.getImageData(0, 0, plotno.width, plotno.height); // wspolrzedne
+});
+
+// pobierz piksele
+btnRun.addEventListener('click', (e) => {
+    imageData = ctx.getImageData(0, 0, plotno.width, plotno.height); // pobieranie pikseli
+    console.log(imageData);
+});
+*/

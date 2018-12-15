@@ -2,13 +2,16 @@ body{
     padding: 0px;
     margin: 0px;
     box-sizing: border-box;
+    text-align: center;
+    background-image: url("tlo.jpg");
+    color: #fff;
+    font-family: Verdana, Arial, Tahoma;
 }
 #container
 {
-    width: 60%;
+    width: 700px;
     margin: auto;
     overflow: hidden;
-    border: 5px solid black;
 }
 #slider {
     display: flex;

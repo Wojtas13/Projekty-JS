@@ -1,19 +1,20 @@
 let slider = document.querySelector('#slider');
 let positionSlider = 0;
+let time = null;
 
 requestAnimationFrame(animation);
 let start = true;
 
-function animationStartStop(e)
+function animationStartStop()
 {
     start = !start;
     requestAnimationFrame(animation);
+    clearTimeout(time);
 }
-
 
 function animation() {
        
-    setTimeout(animation, 16);
+    time = setTimeout(animation, 10);
     positionSlider--;
 
     slider.addEventListener('mouseover', animationStartStop);
@@ -22,10 +23,14 @@ function animation() {
     if(start)
     {
          slider.style.left = `${positionSlider}px`;
+         
     }
+    if(positionSlider == -2800){
+        positionSlider = 0;
+    } 
 }
 
-function animationStart(e){
+function animationStart(){
     start = true;
     animation();
 }
