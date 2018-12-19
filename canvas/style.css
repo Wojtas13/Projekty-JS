@@ -68,3 +68,8 @@ canvas{
     top: 0;
     opacity: 0;
 }
+.val{
+    margin-left: 20px;
+    float: right;
+    color: #fff;
+}

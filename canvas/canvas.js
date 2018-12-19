@@ -5,109 +5,106 @@ let plik = document.querySelector('input[type=file]');
 let kontrast = document.querySelector('#kontrast');
 let jasnosc = document.querySelector('#jasnosc');
 let nasycenie = document.querySelector('#nasycenie');
+let val = document.querySelectorAll(".val");
+let input = document.querySelectorAll(".slider");
 
 //////////////////////////////////
 
 let value = undefined;  // wartosc suwaka
 let ctx = plotno.getContext('2d'); // kontekst pola canvas
+let imageData = null;
+let img = new Image(); //zdjecie
+let oldValue; //stara wartosc suwaka
 
 //pobierz zdjecie
 plik.addEventListener('change', ()=>{
     let reader = new FileReader(); //objekt do czytania zawartosci plikow
     reader.onload = function(){ //zaladowanie odczytu pliku
-        let img = new Image(); 
         img.onload = function(){ //zaladowanie zdjecia
             ctx.drawImage(img, 0, 0, plotno.clientWidth, plotno.height); //rysowanie zdjecia
+            for(let i = 0; i < 3; i++){ //przypisanie vartosci suwakom
+                val[i].innerHTML = 0;
+                input[i].value = 0;
+            }
+            //zdarzenie jasnosci
+            jasnosc.addEventListener('change', () => {
+                imageData = ctx.getImageData(0, 0, plotno.width, plotno.height);
+                if(jasnosc.value !== oldValue){
+                    ustawJasnosc(Number(jasnosc.value));
+                }             
+                val[1].innerHTML = jasnosc.value;  
+                oldValue = Number(jasnosc.value);
+            });
+            //zdarzenie kontrastu
+            kontrast.addEventListener('change', () => {
+                imageData = ctx.getImageData(0, 0, plotno.width, plotno.height);
+                if(kontrast.value !== oldValue){
+                    ustawKontrast(Number(kontrast.value));
+                }             
+                val[0].innerHTML = kontrast.value;  
+                oldValue = Number(kontrast.value);
+            });
+            //zdarzenie nasycenia
+            nasycenie.addEventListener('change', () => {
+                imageData = ctx.getImageData(0, 0, plotno.width, plotno.height);
+                if(nasycenie.value !== oldValue){
+                    ustawNasycenie(Number(nasycenie.value));
+                }             
+                val[2].innerHTML = nasycenie.value;  
+                oldValue = Number(nasycenie.value);
+            });
         }
         img.src = reader.result; //przypisanie sciezki
     }
     reader.readAsDataURL(plik.files[0]); //pobranie sciezki
 });
+
 // suwak kontrastu
-kontrast.addEventListener('change', (e) => {
-    value = kontrast.value;
-    value = parseInt(value, 10);
+function ustawKontrast(value){ 
+    ctx.drawImage(img, 0, 0, plotno.clientWidth, plotno.height);
     imageData = ctx.getImageData(0, 0, plotno.width, plotno.height);
-    factor = (259 * (value + 255)) / (255 * (259 - value));
-    for (var i = 0; i < imageData.data.length; i += 4) {
+    factor = (259 * (value + 255)) / (255 * (259 - value)); // obliczanie koloru
+    //przypisanie koloru do pikseli
+    for (let i = 0; i < imageData.data.length; i += 4) {
         imageData.data[i] = factor * (imageData.data[i] - 128) + 128;
         imageData.data[i + 1] = factor * (imageData.data[i + 1] - 128) + 128;
         imageData.data[i + 2] = factor * (imageData.data[i + 2] - 128) + 128;
     }
     ctx.putImageData(imageData, 0, 0);
-    console.log(punkt.width);
-});
+}
 
 // suwak jasnosci
-jasnosc.addEventListener('change', (e) => { 
-    value = jasnosc.value;
-    value = parseInt(value, 10);
+function ustawJasnosc(value){    
+    ctx.drawImage(img, 0, 0, plotno.clientWidth, plotno.height);
     imageData = ctx.getImageData(0, 0, plotno.width, plotno.height);
-    for(let i = 0; i < imageData.data.length; i += 4){
-        imageData.data[i] += value;
-        imageData.data[i + 1] += value;
-        imageData.data[i + 2] += value;
+    for (let i = 0; i < imageData.data.length; i += 4) {
+        imageData.data[i] = imageData.data[i] + value * 2;
+        imageData.data[i + 1] = imageData.data[i + 1] + value * 2;
+        imageData.data[i + 2] = imageData.data[i + 2] + value * 2;
     }
     ctx.putImageData(imageData, 0, 0);
-});
+}
 
 // suwak nasycenia
-nasycenie.addEventListener('change', (e) => {
-    value = nasycenie.value;
-    value = parseFloat(value);
+function ustawNasycenie(value){
+    ctx.drawImage(img, 0, 0, plotno.clientWidth, plotno.height);
     imageData = ctx.getImageData(0, 0, plotno.width, plotno.height);
-    let dA = imageData.data;
-    let sv = value;
-    let luR = 0.3086;
-    let luG = 0.6094;
-    let luB = 0.0820;
-    let az = (1 - sv) * luR + sv;
-    let bz = (1 - sv) * luG;
-    let cz = (1 - sv) * luB;
-    let dz = (1 - sv) * luR;
-    let ez = (1 - sv) * luG + sv;
-    let fz = (1 - sv) * luB;
-    let gz = (1 - sv) * luR;
-    let hz = (1 - sv) * luG;
-    let iz = (1 - sv) * luB + sv;
-    for (let i = 0; i < dA.length; i += 4) {
-        let red = dA[i];
-        let green = dA[i + 1];
-        let blue = dA[i + 2];
-        let saturatedRed = (az * red + bz * green + cz * blue);
-        let saturatedGreen = (dz * red + ez * green + fz * blue);
-        let saturateddBlue = (gz * red + hz * green + iz * blue);
-        dA[i] = saturatedRed;
-        dA[i + 1] = saturatedGreen;
-        dA[i + 2] = saturateddBlue;
+    let iD = imageData.data;console.log(imageData);
+    value = -(value / 100);
+    for (let i = 0; i < iD.length; i += 4) {
+        let r = iD[i];
+        let g = iD[i + 1];
+        let b = iD[i + 2];
+        let mix = 0.3086 * r + 0.6094 * g + 0.0820 * b; //wzor mieszania kolorow
+        //obliczanie nowego koloru
+        iD[i] = (1 - value) * iD[i] + value * mix;
+        iD[i + 1] = (1 - value) * iD[i + 1] + value * mix;
+        iD[i + 2] = (1 - value) * iD[i + 2] + value * mix;
     }
-    imageData.data = dA;
+    console.log(imageData);
     ctx.putImageData(imageData, 0, 0);
-});
+}
 
 //-------------------------
 //zmiana kontrastu jasnosci nasycenia
 // rysowanie po zdjeciu mouse events canvas
-/*
-    PRZYKLAD
-    for(let i = 0; i < imageData.data.length; i += 4){ //petla pobiera caly piksel 
-        imageData.data[i] = Math.min(255, imageData.data[i] + 30);
-        imageData.data[i + 1] = Math.min(255, imageData.data[i + 1] + 30);
-        imageData.data[i + 2] = Math.min(255, imageData.data[i + 2] + 30); // dodawanie wartosci do kazdej skladowej piksela
-    }
-    ctx.putImageData(imageData, 0, 0); // wrzucanie do canvasa 
-*/
-
-/*
-// po zaladowaniu strony
-img.addEventListener('load', (e) => {
-    ctx.drawImage(img, 0, 0, plotno.clientWidth, plotno.height); // rysowanie zdjecia
-    let imageData = ctx.getImageData(0, 0, plotno.width, plotno.height); // wspolrzedne
-});
-
-// pobierz piksele
-btnRun.addEventListener('click', (e) => {
-    imageData = ctx.getImageData(0, 0, plotno.width, plotno.height); // pobieranie pikseli
-    console.log(imageData);
-});
-*/
