@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="maze">
-        <h1>Labirynt 10x10</h1>
+        <h1>Labirynt 20x20</h1>
         <div id="canvases">
             <canvas id="canvas" width="480" height="480"></canvas>
             <canvas id="ball" width="48" height="48"></canvas>
@@ -17,10 +17,7 @@
         <p><h2>Ustaw telefon w pozycji poziomej</h2></p>
         <div id="menu">
 			<button id="start">Nowa gra</button>
-			<button id="restart">Restart</button>
-            <label for="czas">Czas:</label>
-            <br>
-			<label id="end" for="end">Gratulacje! Wygrałeś! <br> Nacisnij Restart aby zagrać ponownie.</label>
+            <label id="czas" for="czas">Czas:</label>
         </div>
     </div>
 
@@ -29,3 +26,8 @@
 <!--KONIEC JAVASCRIPT-->
 </body>
 </html>
+
+<!--
+    let czas = Date.now() 
+    let czas = new Date()
+-->

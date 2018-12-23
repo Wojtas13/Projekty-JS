@@ -3,9 +3,9 @@ body{
     margin: 0px;
     box-sizing: border-box;
     text-align: center;
-    background-image: url("tlo.jpg");
-    color: #fff;
-    font-family: Verdana, Arial, Tahoma;
+    font-family: Arial, Verdana, Tahoma;
+    background-image: linear-gradient(to right, #2a2a2a, #202020);
+    color: #35cac5;
 }
 #container
 {
